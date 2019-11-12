@@ -9,4 +9,8 @@ router.get("/", async (req, res) => {
     res.send("disini seharusnya muncul list requested documents");
 });
 
+router.post("/", async (req,res)=>{
+    //TODO insert record ke database
+});
+
 export default router;
