@@ -3,10 +3,13 @@ import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 @Entity()
 export class RequestedDocs {
     @PrimaryGeneratedColumn()
-    nimMhs: number;
+    idDocs: number;
 
     @Column()
     public namaMhs!: string;
+
+    @Column()
+    public nim!: number;
 
     @Column()
     public alamatMhs!: string;
@@ -22,5 +25,8 @@ export class RequestedDocs {
 
     @Column()
     public ketKeperluan!: string;
+
+    @Column()
+    public status!: string;
 
 }

@@ -2,6 +2,7 @@
     <span>
         <v-navigation-drawer
                 v-model="drawer"
+                light
                 absolute
                 temporary
             >
