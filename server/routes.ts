@@ -1,5 +1,5 @@
-import fadelRoute from './api/fadel';
+import daftarRequest from './api/requestedDocs';
 
 export default function(express) {
-    express.use('/api/fadel', fadelRoute)
+    express.use('/api/daftarRequest', daftarRequest)
 }
