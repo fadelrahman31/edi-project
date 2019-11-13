@@ -1,7 +1,7 @@
 import {RequestedDocs} from "../entity/RequestedDocs";
 
 import {onDatabaseConnected} from "../db";
-import {Connection} from "typeorm";
+import {Connection, DeleteResult} from "typeorm";
 const router = require('express').Router();
 
 interface RequestBody {
@@ -39,6 +39,18 @@ onDatabaseConnected((connection: Connection) => {
         res.send(createdDocs);
 
     });
+
+    router.delete("/:idDocs", async function(req, res, next){
+        const list = connection.getRepository(RequestedDocs);
+        let deleteDocs = await list.delete(req.params.idDocs);
+
+        if(deleteDocs.affected > 0){
+            res.send({success: true});
+        } else {
+            res.status(404);
+            res.send({error: "Dokumen dengan ID tidak dapat ditemukan"});
+        }
+    })
 });
     
 

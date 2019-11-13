@@ -97,7 +97,7 @@
                                 :disabled= "!valid || !ketKeperluan"
                                 color= "success"
                                 class= "ma-6 mr-4"   
-                                @click="submitForm" 
+                                @click="overlay = !overlay" 
                             >
                                 Submit
                             </v-btn>
@@ -105,7 +105,30 @@
                             <v-btn
                                 class= "ma-2 mr-4" 
                                 @click="clearAll"
-                            > Reset </v-btn>
+                            > Reset 
+                            </v-btn>
+
+                            <v-overlay
+                                :absolute="absolute"
+                                :value="overlay"
+                            >
+                                <p>Apakah anda yakin akan submit pengajuan dokumen?</p>
+                                <v-row align="center" justify="center">
+                                    <v-btn
+                                        color= "success"
+                                        class= "ma-6 mr-4"
+                                        @click="submitForm"
+                                    >
+                                        Iya
+                                    </v-btn>
+                                    <v-btn
+                                        class= "ma-6 mr-4"
+                                        @click= "overlay=!overlay"
+                                    >
+                                        Tidak
+                                    </v-btn>
+                                </v-row>
+                            </v-overlay>
 
                         </v-container>
                     </v-col>
@@ -122,6 +145,8 @@ import confirmation from '@/pages/confirmation'
 export default {
     name: 'HomeHero',
     data: () => ({
+        absolute: true,
+        overlay: false,
         valid: true,
         nama: '',
         rulesNama: [

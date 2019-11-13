@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
 
 @Entity()
 export class RequestedDocs {
@@ -28,5 +28,8 @@ export class RequestedDocs {
 
     @Column()
     public status!: string;
+
+    @CreateDateColumn()
+    public submitDate!: Date;
 
 }
