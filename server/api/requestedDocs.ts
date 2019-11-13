@@ -34,6 +34,7 @@ onDatabaseConnected((connection: Connection) => {
         dokumen.keperluanMhs = docsBody.keperluanMhs;
         dokumen.ketKeperluan = docsBody.ketKeperluan;
         dokumen.status = "on-going";
+        dokumen.approval = false;
 
         const createdDocs = await connection.manager.save(dokumen);
         res.send(createdDocs);

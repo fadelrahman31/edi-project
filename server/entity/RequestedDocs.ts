@@ -29,6 +29,9 @@ export class RequestedDocs {
     @Column()
     public status!: string;
 
+    @Column()
+    public approval!: boolean;
+
     @CreateDateColumn()
     public submitDate!: Date;
 
