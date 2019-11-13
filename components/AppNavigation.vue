@@ -11,6 +11,7 @@
                     <v-list-item
                         v-for= "item in items"
                         :key= "item.title"
+                        :to= "item.path"
                         link
                     >
                         <v-list-item-content>
@@ -41,9 +42,18 @@ export default {
             appTitle: 'Layanan Electronic Document Issuance',
             drawer: null,
             items: [
-                { title: 'Form Pengajuan Dokumen' }, 
-                { title: 'Cek Status Pengajuan' }, 
-                { title: 'Penerbitan Dokumen' }
+                { 
+                    title: 'Form Pengajuan Dokumen',
+                    path: '/form' 
+                }, 
+                { 
+                    title: 'Cek Status Pengajuan',
+                    path: '' 
+                }, 
+                { 
+                    title: 'Penerbitan Dokumen',
+                    path: '/issued-documents' 
+                }
             ]
         };
     }
