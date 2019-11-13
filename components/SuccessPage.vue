@@ -7,6 +7,7 @@
             <p>Berikut ini review data yang anda submisi ke dalam sistem :</p>
             <v-btn
                 class= "ma-2 mr-4"
+                @click="goBack"
             >Go Back to Form Page</v-btn>
             <v-divider></v-divider>
         </v-layout>
@@ -14,8 +15,15 @@
 </template>
 
 <script>
+import form from '@/pages/form'
+
 export default {
-    name: 'SuccessPage'
+    name: 'SuccessPage',
+    methods: {
+        goBack() {
+            this.$router.push(form);
+        }
+    }
     
 }
 </script>

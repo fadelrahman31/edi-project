@@ -117,6 +117,7 @@
 
 <script>
 import axios from 'axios'
+import confirmation from '@/pages/confirmation'
 
 export default {
     name: 'HomeHero',
@@ -173,6 +174,7 @@ export default {
             this.ketKeperluan = ''
         },
         submitForm (){
+            this.$router.push(confirmation);
             axios.post('http://localhost:3000/api/daftarRequest',{
                 namaMhs     : this.nama,
                 nim         : this.nim,
@@ -186,6 +188,11 @@ export default {
                   console.error(e)
               })
             
+            
+        },
+        dummyTest(){
+            //TODO - It has to be like this : this.$router.push(confirmation?nim);
+            this.$router.push(confirmation);
         }
     }
 }
