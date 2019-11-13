@@ -4,7 +4,7 @@
     <v-container>
       <div class="headline mt-5">Dokumen Terbit</div>
       <v-card elevation="2" class="mt-4">
-        <v-simple-table>
+        <v-simple-table v-if="!loading">
           <template v-slot:default>
             <thead>
             <tr>
@@ -17,12 +17,12 @@
             </thead>
             <tbody>
             <tr v-for="item, i in documents" :key="i">
-              <td>{{ item.name }}</td>
+              <td>{{ item.title }}</td>
               <td>{{ item.type }}</td>
-              <td class="hidden-sm-and-down">{{ $moment(item.request_date).format('Do MMMM YYYY, HH:mm:ss') }}</td>
-              <td class="hidden-sm-and-down">{{ $moment(item.issued_date).format('Do MMMM YYYY, HH:mm:ss') }}</td>
+              <td class="hidden-sm-and-down">{{ $moment(item.requestedDate).format('Do MMMM YYYY, HH:mm:ss') }}</td>
+              <td class="hidden-sm-and-down">{{ $moment(item.issuedDate).format('Do MMMM YYYY, HH:mm:ss') }}</td>
               <td>
-                <a :href="`/api/documents/download/${item.id}`" style="text-decoration: none">
+                <a :href="`/api/documents/download/${item.uuid}`" target="_blank" style="text-decoration: none">
                   <v-btn icon color="primary"><v-icon>save</v-icon></v-btn>
                 </a>
               </td>
@@ -39,30 +39,36 @@
 import AppNavigation from '@/components/AppNavigation';
 import HomeHero from '@/components/HomeHero';
 
+const axios = require('axios');
+
 export default {
   name: "index",
   components: {AppNavigation, HomeHero},
   head: {
     title: "Dokumen Terbit"
   },
+  mounted() {
+    this.load();
+  },
+  methods: {
+    load() {
+      this.loading = true;
+      axios.get("/api/documents/issued")
+        .then(response => {
+          this.documents = response.data;
+        })
+        .catch(e => {
+          alert("Error: " + e.toString());
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    }
+  },
   data() {
     return {
-      documents: [
-        {
-          id: "71f888f7-d1ce-4cf5-8ade-c255079e32fa",
-          name: "Surat Izin Tidak Mengikuti Kuliah untuk Gemastik 12",
-          type: "Surat Izin",
-          request_date: Date.parse("2019-11-11T16:30:12+07:00"),
-          issued_date: Date.parse("2019-11-13T12:47:38+07:00"),
-        },
-        {
-          id: "bf02041c-a979-49b4-898e-0ad65a763f86",
-          name: "Keterangan Mahasiswa Aktif untuk COMPFEST XI",
-          type: "Surat Keterangan",
-          request_date: Date.parse("2019-09-01T09:13:26+07:00"),
-          issued_date: Date.parse("2019-09-03T14:23:51+07:00"),
-        }
-      ]
+      loading: false,
+      documents: []
     }
   }
 }
