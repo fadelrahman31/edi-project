@@ -39,7 +39,7 @@ export default {
     name: 'AppNavigation',
     data() {
         return {
-            appTitle: 'Layanan Electronic Document Issuance',
+            appTitle: 'Layanan Electronic Document Issuance - TU STEI',
             drawer: null,
             items: [
                 { 
