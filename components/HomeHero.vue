@@ -21,7 +21,7 @@
                                 v-model="valid"
                             >
                                 <v-text-field
-                                    v-model="nama"
+                                    v-model= "nama"
                                     :counter="25"
                                     :rules="rulesNama"
                                     label="Nama"
@@ -29,7 +29,7 @@
                                 ></v-text-field>
 
                                 <v-text-field
-                                    v-model="nim"
+                                    v-model= "nim"
                                     :rules="rulesNim"
                                     label="NIM"
                                     required
@@ -50,7 +50,7 @@
                                 ></v-text-field>
 
                                 <v-select
-                                    v-model="jurusan"
+                                    v-model= "jurusan"
                                     :items= "items"
                                     :rules= "[v => !!v || 'Pilihan Jurusan is required']"
                                     label="Jurusan / Program Studi"
@@ -58,7 +58,7 @@
                                 ></v-select>
 
                                 <v-select   
-                                    v-model="keperluan"
+                                    v-model= "keperluan"
                                     :items= "reqs"
                                     :rules= "[v => !!v || 'Keperluan is required']"
                                     label="Keperluan"
@@ -96,7 +96,8 @@
                             <v-btn
                                 :disabled= "!valid || !ketKeperluan"
                                 color= "success"
-                                class= "ma-6 mr-4"    
+                                class= "ma-6 mr-4"   
+                                @click="submitForm" 
                             >
                                 Submit
                             </v-btn>
@@ -115,6 +116,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'HomeHero',
     data: () => ({
@@ -168,6 +171,21 @@ export default {
             this.jurusan = null
             this.keperluan = null
             this.ketKeperluan = ''
+        },
+        submitForm (){
+            axios.post('http://localhost:3000/api/daftarRequest',{
+                namaMhs     : this.nama,
+                nim         : this.nim,
+                alamatMhs   : this.alamat,
+                emailMhs    : this.email,
+                jurusanMhs  : this.jurusan,
+                keperluanMhs: this.keperluan,
+                ketKeperluan: this.ketKeperluan
+            }).then((response) => {})
+              .catch((e) => {
+                  console.error(e)
+              })
+            
         }
     }
 }
