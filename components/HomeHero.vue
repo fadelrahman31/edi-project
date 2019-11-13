@@ -112,22 +112,29 @@
                                 :absolute="absolute"
                                 :value="overlay"
                             >
-                                <p>Apakah anda yakin akan submit pengajuan dokumen?</p>
-                                <v-row align="center" justify="center">
-                                    <v-btn
-                                        color= "success"
-                                        class= "ma-6 mr-4"
-                                        @click="submitForm"
-                                    >
-                                        Iya
-                                    </v-btn>
-                                    <v-btn
-                                        class= "ma-6 mr-4"
-                                        @click= "overlay=!overlay"
-                                    >
-                                        Tidak
-                                    </v-btn>
-                                </v-row>
+                                <v-card
+                                    class="ma-6 pa-6"
+                                    raised
+                                    shaped
+                                    color="blue darken-1"
+                                >
+                                    <h3>Apakah anda yakin akan submit pengajuan dokumen?</h3>
+                                    <v-row align="center" justify="center">
+                                        <v-btn
+                                            color= "success"
+                                            class= "ma-6 mr-4"
+                                            @click="submitForm"
+                                        >
+                                            Iya
+                                        </v-btn>
+                                        <v-btn
+                                            class= "ma-6 mr-4"
+                                            @click= "overlay=!overlay"
+                                        >
+                                            Tidak
+                                        </v-btn>
+                                    </v-row>
+                                </v-card>
                             </v-overlay>
 
                         </v-container>
