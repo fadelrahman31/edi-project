@@ -31,17 +31,19 @@ module.exports = {
   */
   plugins: [
   ],
-  
+
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/moment'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
+    'nuxt-material-design-icons'
   ],
   /*
   ** vuetify module configuration
@@ -51,7 +53,7 @@ module.exports = {
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: false,
-      
+
     }
   },
   /*
@@ -63,5 +65,9 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  moment: {
+    defaultLocale: 'id',
+    locales: ['id']
   }
 }

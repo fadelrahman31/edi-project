@@ -1,6 +1,7 @@
 import "reflect-metadata"
 import {Connection, ConnectionOptions, createConnection} from "typeorm";
 import {RequestedDocs} from "./entity/RequestedDocs";
+import {IssuedDocument} from "./entity/IssuedDocument";
 
 let connection: Connection;
 let callbacks: Function[] = [];
@@ -13,7 +14,8 @@ const dbOptions: ConnectionOptions = {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     entities: [
-        RequestedDocs
+        RequestedDocs,
+        IssuedDocument
     ],
     synchronize: true,
     logging: false
