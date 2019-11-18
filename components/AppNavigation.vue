@@ -48,7 +48,7 @@ export default {
                 }, 
                 { 
                     title: 'Cek Status Pengajuan',
-                    path: '' 
+                    path: '/status' 
                 }, 
                 { 
                     title: 'Penerbitan Dokumen',
