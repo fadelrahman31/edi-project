@@ -1,5 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
 
+export enum Approval {
+    BELUM = "0",
+    REJECT = "1",
+    ACCEPT = "2"
+}
+
 @Entity()
 export class RequestedDocs {
     @PrimaryGeneratedColumn()
@@ -29,8 +35,12 @@ export class RequestedDocs {
     @Column()
     public status!: string;
 
-    @Column()
-    public approval!: boolean;
+    @Column({
+        type: "enum",
+        enum: Approval,
+        default: Approval.BELUM
+    })
+    public approval!: Approval;
 
     @CreateDateColumn()
     public submitDate!: Date;

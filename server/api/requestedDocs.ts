@@ -1,7 +1,7 @@
-import {RequestedDocs} from "../entity/RequestedDocs";
+import {RequestedDocs, Approval} from "../entity/RequestedDocs";
 
 import {onDatabaseConnected} from "../db";
-import {Connection, DeleteResult} from "typeorm";
+import {Connection, DeleteResult, Not} from "typeorm";
 const router = require('express').Router();
 
 interface RequestBody {
@@ -34,7 +34,7 @@ onDatabaseConnected((connection: Connection) => {
         dokumen.keperluanMhs = docsBody.keperluanMhs;
         dokumen.ketKeperluan = docsBody.ketKeperluan;
         dokumen.status = "on-going";
-        dokumen.approval = false;
+        dokumen.approval = Approval.BELUM;
 
         const createdDocs = await connection.manager.save(dokumen);
         res.send(createdDocs);
@@ -52,6 +52,39 @@ onDatabaseConnected((connection: Connection) => {
             res.send({error: "Dokumen dengan ID tidak dapat ditemukan"});
         }
     })
+
+    router.get("/pendingApproval", async function (req, res) {
+        const list = connection.getRepository(RequestedDocs);
+        const requestedList : RequestedDocs[] = await list.find({"approval":Approval.BELUM});
+        res.send(requestedList);
+    });
+
+    router.post("/:idDocs/approve", async function(req, res, next){
+        const list = connection.getRepository(RequestedDocs);
+        const docsToUpdate : RequestedDocs = await list.findOne({"idDocs":req.params.idDocs});
+        if (!docsToUpdate) {
+            res.status(404);
+            res.send({error: "Mohon maaf dokumen tidak ditemukan :("});
+            return;
+          }
+        docsToUpdate.approval = Approval.ACCEPT;
+        const editedDocs = await connection.manager.save(docsToUpdate);
+        res.send({success: true});
+    })
+
+    router.post("/:idDocs/reject", async function(req, res, next){
+        const list = connection.getRepository(RequestedDocs);
+        const docsToUpdate : RequestedDocs = await list.findOne({"idDocs":req.params.idDocs, "approval":Not(Approval.ACCEPT)});
+        if (!docsToUpdate) {
+            res.status(404);
+            res.send({error: "Mohon maaf dokumen tidak ditemukan :("});
+            return;
+          }
+        docsToUpdate.approval = Approval.REJECT;
+        const editedDocs = await connection.manager.save(docsToUpdate);
+        res.send({success: true});
+    })
+
 });
     
 
