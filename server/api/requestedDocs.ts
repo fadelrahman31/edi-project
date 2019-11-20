@@ -78,6 +78,8 @@ onDatabaseConnected((connection: Connection) => {
             return;
           }
         docsToUpdate.approval = Approval.ACCEPT;
+        docsToUpdate.status = "issued";
+        
         const editedDocs = await connection.manager.save(docsToUpdate);
 
         const issuedDocument = new IssuedDocument();
@@ -102,6 +104,7 @@ onDatabaseConnected((connection: Connection) => {
             return;
           }
         docsToUpdate.approval = Approval.REJECT;
+        docsToUpdate.status = "rejected";
         const editedDocs = await connection.manager.save(docsToUpdate);
         res.send({success: true});
     })
