@@ -3,7 +3,9 @@ import {RequestedDocs, Approval} from "../entity/RequestedDocs";
 import {onDatabaseConnected} from "../db";
 import {Connection, DeleteResult, Not} from "typeorm";
 import { async } from "q";
+import {IssuedDocument} from "../entity/IssuedDocument";
 const router = require('express').Router();
+const uuidv4 = require('uuid/v4');
 
 interface RequestBody {
     namaMhs : string;
@@ -77,7 +79,18 @@ onDatabaseConnected((connection: Connection) => {
           }
         docsToUpdate.approval = Approval.ACCEPT;
         const editedDocs = await connection.manager.save(docsToUpdate);
-        res.send({success: true});
+
+        const issuedDocument = new IssuedDocument();
+        issuedDocument.nim = editedDocs.nim.toString();
+        issuedDocument.title = editedDocs.ketKeperluan;
+        issuedDocument.type = editedDocs.keperluanMhs;
+        issuedDocument.requestedDate = editedDocs.submitDate;
+        issuedDocument.issuedDate = new Date();
+        issuedDocument.uuid = uuidv4();
+
+        const addedIssuedDocument = await connection.manager.save(issuedDocument);
+
+        res.send({success: true, issuedDocument: addedIssuedDocument});
     })
 
     router.post("/:idDocs/reject", async function(req, res, next){
