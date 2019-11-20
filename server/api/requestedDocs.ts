@@ -22,6 +22,12 @@ onDatabaseConnected((connection: Connection) => {
         res.send(requestedList);
     });
 
+    router.get("/pendingApproval", async function (req, res) {
+        const list = connection.getRepository(RequestedDocs);
+        const requestedList : RequestedDocs[] = await list.find({"approval":Approval.BELUM});
+        res.send(requestedList);
+    });
+
     router.get("/:nim", async function (req,res){
         const nim = req.params.nim;
         const list = connection.getRepository(RequestedDocs);
@@ -60,12 +66,6 @@ onDatabaseConnected((connection: Connection) => {
             res.send({error: "Dokumen dengan ID tidak dapat ditemukan"});
         }
     })
-
-    router.get("/pendingApproval", async function (req, res) {
-        const list = connection.getRepository(RequestedDocs);
-        const requestedList : RequestedDocs[] = await list.find({"approval":Approval.BELUM});
-        res.send(requestedList);
-    });
 
     router.post("/:idDocs/approve", async function(req, res, next){
         const list = connection.getRepository(RequestedDocs);
