@@ -2,6 +2,7 @@ import {RequestedDocs, Approval} from "../entity/RequestedDocs";
 
 import {onDatabaseConnected} from "../db";
 import {Connection, DeleteResult, Not} from "typeorm";
+import { async } from "q";
 const router = require('express').Router();
 
 interface RequestBody {
@@ -20,6 +21,13 @@ onDatabaseConnected((connection: Connection) => {
         const requestedList : RequestedDocs[] = await list.find();
         res.send(requestedList);
     });
+
+    router.get("/:nim", async function (req,res){
+        const nim = req.params.nim;
+        const list = connection.getRepository(RequestedDocs);
+        const queryResults = await list.find({ nim });
+        res.send(queryResults);
+    })
 
     router.post("/", async function (req,res, next)  {
         //TODO insert record ke database
@@ -86,7 +94,7 @@ onDatabaseConnected((connection: Connection) => {
     })
 
 });
-    
+
 
 export default router;
 
