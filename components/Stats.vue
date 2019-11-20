@@ -4,7 +4,7 @@
             <h1>Selamat Datang di Form Pengecekan Dokumen!</h1>
             <p>Silahkan masukan NIM anda</p>
             <v-container fluid>
-                <v-row 
+                <v-row
                     justify= "space-between"
                 >
                 <v-col
@@ -101,8 +101,8 @@
                     </v-col>
                 </v-layout>
 </v-col>
-               
-            </v-container>    
+
+            </v-container>
         </v-layout>
     </v-container>
 </template>
@@ -137,7 +137,7 @@ export default {
         },
         async submitForm (){
           var queryNim = (this.nim);
-          const urlQuery ='http://localhost:3000/api/daftarRequest/'+queryNim;
+          const urlQuery ='/api/daftarRequest/'+queryNim;
           const response = await axios.get(urlQuery);
           console.log(response.data);
           if (response.data!=null){

@@ -4,7 +4,7 @@
             <h1>Selamat Datang di Form Pengajuan Dokumen!</h1>
             <p>Silahkan isi form berikut sesuai dengan data yang benar</p>
             <v-container fluid>
-                <v-row 
+                <v-row
                     justify= "space-between"
                 >
                     <v-col
@@ -15,7 +15,7 @@
                             class="ma-6 pa-6"
                             raised
                             tile
-                        > 
+                        >
                             <v-form
                                 ref="form"
                                 v-model="valid"
@@ -57,18 +57,18 @@
                                     required
                                 ></v-select>
 
-                                <v-select   
+                                <v-select
                                     v-model= "keperluan"
                                     :items= "reqs"
                                     :rules= "[v => !!v || 'Keperluan is required']"
                                     label="Keperluan"
-                                    required 
+                                    required
                                 ></v-select>
                             </v-form>
                         </v-card>
                     </v-col>
                     <v-spacer></v-spacer>
-                    <v-col  
+                    <v-col
                         cols= "12"
                         md="6"
                     >
@@ -80,7 +80,7 @@
                             >
                                 <v-form
                                     ref="form"
-                                    v-model="valid" 
+                                    v-model="valid"
                                 >
                                     <v-textarea
                                         v-model= "ketKeperluan"
@@ -89,23 +89,23 @@
                                         label= "Keterangan Keperluan Pengajuan Dokumen"
                                         auto-grow
                                         required
-                                    ></v-textarea>                    
+                                    ></v-textarea>
                                 </v-form>
-                            </v-card>    
-                            
+                            </v-card>
+
                             <v-btn
                                 :disabled= "!valid || !ketKeperluan"
                                 color= "success"
-                                class= "ma-6 mr-4"   
-                                @click="overlay = !overlay" 
+                                class= "ma-6 mr-4"
+                                @click="overlay = !overlay"
                             >
                                 Submit
                             </v-btn>
 
                             <v-btn
-                                class= "ma-2 mr-4" 
+                                class= "ma-2 mr-4"
                                 @click="clearAll"
-                            > Reset 
+                            > Reset
                             </v-btn>
 
                             <v-overlay
@@ -140,7 +140,7 @@
                         </v-container>
                     </v-col>
                 </v-row>
-            </v-container>    
+            </v-container>
         </v-layout>
     </v-container>
 </template>
@@ -207,7 +207,7 @@ export default {
         },
         submitForm (){
             this.$router.push(confirmation);
-            axios.post('http://localhost:3000/api/daftarRequest',{
+            axios.post('/api/daftarRequest',{
                 namaMhs     : this.nama,
                 nim         : this.nim,
                 alamatMhs   : this.alamat,
@@ -219,8 +219,8 @@ export default {
               .catch((e) => {
                   console.error(e)
               })
-            
-            
+
+
         },
         dummyTest(){
             //TODO - It has to be like this : this.$router.push(confirmation?nim);
