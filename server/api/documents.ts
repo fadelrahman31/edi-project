@@ -10,8 +10,16 @@ onDatabaseConnected((connection: Connection) => {
   router.get("/issued", async (req, res) => {
     const repository = connection.getRepository(IssuedDocument);
 
+    const issuedDocuments = await repository.find();
+
+    res.send(issuedDocuments);
+  });
+
+  router.get("/issued/:nim", async (req, res) => {
+    const repository = connection.getRepository(IssuedDocument);
+
     const issuedDocuments = await repository.find({
-      // TODO nim
+      nim: req.params.nim
     });
 
     res.send(issuedDocuments);
